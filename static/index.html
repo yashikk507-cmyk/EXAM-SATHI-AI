@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#f5f5f7">
+<title>ExamSaathi AI — Learn without limits</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:#171719; --muted:#73737b; --paper:#f5f5f7; --white:#fff;
+  --blue:#0878f9; --line:rgba(20,20,24,.09); --soft:#eef3fa;
+  --shadow:0 24px 70px rgba(20,25,40,.08);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+button,textarea,select,input{font:inherit}
+button{cursor:pointer}
+a{color:inherit;text-decoration:none}
+.site-nav{height:68px;padding:0 clamp(20px,6vw,100px);display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.86);backdrop-filter:blur(18px);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20}
+.brand{display:flex;align-items:center;gap:11px;font-size:15px;font-weight:750;letter-spacing:-.5px}
+.brand-mark{width:34px;height:34px;border-radius:11px;background:#171719;color:white;display:grid;place-items:center;font-size:18px;font-weight:800}
+.nav-links{display:flex;align-items:center;gap:30px;color:#55555c;font-size:12px;font-weight:550}
+.nav-links a:hover{color:var(--blue)}
+.nav-right{display:flex;align-items:center;gap:13px}
+.status{display:flex;align-items:center;gap:8px;font-size:11px;color:#25824c;font-weight:650}
+.dot{width:7px;height:7px;border-radius:50%;background:#30b765;box-shadow:0 0 0 4px rgba(48,183,101,.12)}
+.nav-cta{padding:10px 16px;border-radius:999px;background:#171719;color:white;font-size:11px;font-weight:650}
+.hero{min-height:590px;padding:90px clamp(24px,9vw,145px) 105px;background:#08090d;color:white;display:grid;grid-template-columns:1.1fr .9fr;align-items:center;gap:50px;position:relative;overflow:hidden}
+.hero:before{content:"";position:absolute;width:650px;height:650px;border-radius:50%;right:-100px;top:-260px;background:radial-gradient(circle,rgba(24,111,255,.28),rgba(24,111,255,0) 68%);pointer-events:none}
+.hero-copy,.hero-art{position:relative;z-index:1}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border:1px solid rgba(255,255,255,.15);border-radius:999px;color:#b9d5ff;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase}
+.eyebrow span{width:6px;height:6px;background:#5da5ff;border-radius:50%;box-shadow:0 0 12px #5da5ff}
+.hero h1{font-size:clamp(48px,6.4vw,82px);line-height:.99;letter-spacing:-5px;margin:27px 0 22px;font-weight:750}
+.hero h1 em{font-style:normal;color:#80baff}
+.hero-copy>p{max-width:520px;color:#a5a6b0;font-size:15px;line-height:1.85;margin:0}
+.hero-actions{display:flex;align-items:center;gap:18px;margin-top:34px}
+.primary-link{display:inline-flex;align-items:center;gap:12px;background:#fff;color:#111;padding:14px 19px;border-radius:999px;font-size:12px;font-weight:700;transition:.2s}
+.primary-link:hover{transform:translateY(-2px);background:#eaf3ff}
+.secondary-link{font-size:12px;color:#c5c6ce}
+.hero-art{min-height:340px;display:grid;place-items:center}
+.orbit{width:min(360px,75vw);aspect-ratio:1;border:1px solid rgba(255,255,255,.12);border-radius:50%;display:grid;place-items:center;position:relative;box-shadow:0 0 0 38px rgba(255,255,255,.025),0 0 0 78px rgba(255,255,255,.018)}
+.orbit:before,.orbit:after{content:"";position:absolute;border-radius:50%;inset:12%;border:1px solid rgba(105,170,255,.17)}
+.orbit:after{inset:25%;border-color:rgba(105,170,255,.22)}
+.orb-core{width:43%;aspect-ratio:1;border-radius:32%;transform:rotate(45deg);background:linear-gradient(145deg,#c5e1ff 0%,#438fff 48%,#1248ad 100%);box-shadow:0 0 80px rgba(39,125,255,.48),inset 0 2px 18px rgba(255,255,255,.55);display:grid;place-items:center}
+.orb-core span{transform:rotate(-45deg);font-size:55px;font-weight:800;color:white;text-shadow:0 5px 20px rgba(0,0,0,.2)}
+.float-chip{position:absolute;padding:11px 14px;border-radius:13px;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.14);backdrop-filter:blur(15px);color:#e8efff;font-size:10px;font-weight:600;box-shadow:0 12px 35px rgba(0,0,0,.2)}
+.chip-one{top:12%;left:-8%}.chip-two{right:-12%;top:32%}.chip-three{bottom:9%;left:4%}
+.capabilities{max-width:1120px;margin:-34px auto 86px;padding:0 22px;position:relative;z-index:2;display:grid;grid-template-columns:repeat(3,1fr);gap:13px}
+.capability{background:white;border:1px solid var(--line);border-radius:18px;padding:21px 23px;box-shadow:0 12px 35px rgba(20,25,40,.055);display:flex;gap:15px;align-items:flex-start}
+.cap-icon{width:40px;height:40px;border-radius:13px;background:#eff5ff;display:grid;place-items:center;font-size:19px;flex:none}
+.capability h3{font-size:12px;margin:2px 0 6px;letter-spacing:-.2px}
+.capability p{font-size:10px;line-height:1.65;color:var(--muted);margin:0}
+.section-intro{max-width:1120px;margin:0 auto 25px;padding:0 22px;display:flex;justify-content:space-between;align-items:end;gap:20px}
+.kicker{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--blue);font-weight:750}
+.section-intro h2{font-size:clamp(27px,3vw,38px);letter-spacing:-1.6px;margin:9px 0 0}
+.section-intro p{max-width:390px;color:var(--muted);font-size:11px;line-height:1.7;margin:0}
+.workspace{max-width:1120px;margin:0 auto 90px;padding:0 22px;display:grid;grid-template-columns:minmax(0,1.35fr) minmax(300px,.85fr);gap:18px;align-items:start}
+.panel{background:white;border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow);overflow:hidden}
+.panel-head{padding:22px 24px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:12px}
+.panel-title{display:flex;align-items:center;gap:12px}
+.panel-symbol{width:36px;height:36px;border-radius:12px;background:#eff5ff;color:#176bd1;display:grid;place-items:center;font-size:17px}
+.panel-head h3{font-size:13px;margin:0 0 5px;letter-spacing:-.2px}
+.panel-head small{font-size:10px;color:var(--muted)}
+.language{border:1px solid var(--line);background:#f7f7f9;color:#333;padding:9px 12px;border-radius:999px;font-size:10px;outline:none}
+.chat-body{padding:23px}
+.welcome{padding:17px 18px;border-radius:15px;background:#f5f7fa;color:#55555c;font-size:11px;line-height:1.8;border:1px solid rgba(0,0,0,.035);margin-bottom:17px}
+.welcome strong{color:#202024}
+.suggestions{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:17px}
+.suggestion{padding:8px 11px;border:1px solid #d8e6fa;background:#fff;border-radius:999px;color:#176bd1;font-size:10px;transition:.2s}
+.suggestion:hover{background:#eef5ff;border-color:#9fc7ff}
+.input-area{background:#f7f8fa;border:1px solid var(--line);border-radius:16px;padding:14px}
+textarea{width:100%;min-height:92px;resize:vertical;border:0;outline:0;background:transparent;color:#202024;font-size:12px;line-height:1.7}
+textarea::placeholder{color:#9999a1}
+.controls{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.control-left,.control-right{display:flex;align-items:center;gap:9px}
+.btn{border:0;border-radius:999px;padding:11px 15px;font-size:10px;font-weight:700;transition:.2s}
+.btn:disabled{opacity:.55;cursor:not-allowed}
+.btn:hover:not(:disabled){transform:translateY(-1px)}
+.mic-btn{background:white;border:1px solid var(--line);color:#34343a}
+.mic-btn.recording{background:#fff0f1;color:#b42335;border-color:#f1a4ad}
+.ask-btn,.notes-upload-btn{background:#0878f9;color:white;box-shadow:0 5px 14px rgba(8,120,249,.18)}
+.ask-btn:hover:not(:disabled),.notes-upload-btn:hover:not(:disabled){background:#0068e6}
+.hint{font-size:9px;color:#8b8b94}
+.loading{display:none;margin-top:15px;color:#0878f9;font-size:11px}
+.message,.notes-error{display:none;margin-top:13px;color:#c53030;font-size:11px;line-height:1.6}
+.response,.notes-answer{display:none;margin-top:17px;padding:18px;background:#f5f7fa;border:1px solid var(--line);border-radius:15px}
+.response h3,.notes-answer h3{font-size:10px;color:#176bd1;letter-spacing:.8px;margin:0 0 12px}
+.answer,.notes-answer-text{white-space:pre-wrap;overflow-wrap:anywhere;color:#34343a;font-size:11px;line-height:1.8}
+.notes-panel{padding-bottom:20px}
+.notes-intro{padding:20px 22px 6px}
+.notes-intro p{margin:0;color:var(--muted);font-size:10px;line-height:1.75}
+.notes-upload{margin:14px 20px 0;padding:17px;border:1px dashed #b8cde8;background:#f7faff;border-radius:15px}
+.upload-icon{width:38px;height:38px;border-radius:12px;background:#e7f1ff;display:grid;place-items:center;font-size:18px;margin-bottom:12px}
+.upload-label{font-size:11px;font-weight:700;margin-bottom:6px}
+.upload-help{font-size:9px;color:var(--muted);line-height:1.6;margin-bottom:13px}
+.notes-file{display:block;width:100%;font-size:9px;color:#6d6d75;margin-bottom:12px}
+.notes-file::file-selector-button{border:1px solid var(--line);background:white;border-radius:999px;padding:8px 11px;margin-right:8px;font-size:9px;cursor:pointer}
+.notes-upload-btn{width:100%}
+.notes-status{display:none;margin:12px 20px 0;padding:11px 12px;border-radius:10px;background:#f0f8f2;color:#287847;font-size:10px;line-height:1.6;overflow-wrap:anywhere}
+.notes-error{margin:12px 20px 0}
+.notes-question{margin:18px 20px 0}
+.notes-question label{display:block;font-size:10px;font-weight:700;margin-bottom:9px}
+.notes-question textarea{min-height:85px;padding:12px;background:#f7f8fa;border:1px solid var(--line);border-radius:12px}
+.notes-ask-row{display:flex;justify-content:flex-end;margin-top:10px}
+.notes-answer{margin:16px 20px 0}
+.notes-sources{margin-top:14px;padding-top:12px;border-top:1px solid var(--line);font-size:9px;line-height:1.8;color:var(--muted)}
+.notes-sources strong{display:block;color:#176bd1;margin-bottom:5px}
+.notes-source-item{overflow-wrap:anywhere}
+.footer{padding:25px 20px 35px;text-align:center;color:#92929a;font-size:9px;letter-spacing:1px;border-top:1px solid var(--line)}
+@media(max-width:900px){
+ .hero{grid-template-columns:1fr;min-height:auto;padding-top:75px;padding-bottom:85px;text-align:center}
+ .hero-copy>p{margin:auto}.hero-actions{justify-content:center}.hero-art{min-height:300px}
+ .workspace{grid-template-columns:1fr}.notes-panel{max-width:none}
+}
+@media(max-width:650px){
+ .site-nav{height:60px;padding:0 17px}.nav-links{display:none}.brand{font-size:13px}.nav-cta{padding:9px 12px;font-size:10px}
+ .status{font-size:0;gap:0}.status .dot{width:8px;height:8px}
+ .hero{padding:65px 22px 75px}.hero h1{font-size:clamp(47px,13vw,66px);letter-spacing:-3.5px}.hero-copy>p{font-size:13px}
+ .hero-art{min-height:260px}.orbit{width:245px}.chip-one{left:-12%}.chip-two{right:-13%}
+ .capabilities{grid-template-columns:1fr;margin-bottom:65px;gap:9px}.capability{padding:16px}
+ .section-intro{display:block}.section-intro p{margin-top:12px}
+ .workspace{padding:0 14px;margin-bottom:65px}.panel{border-radius:18px}.panel-head{padding:17px}
+ .chat-body{padding:16px}.controls,.control-left,.control-right{width:100%}.control-left{flex-wrap:wrap}.control-right .btn,.control-left .btn{flex:1}
+ .hint{width:100%}.language{max-width:105px}
+}
+</style>
+</head>
+<body>
+<header class="site-nav">
+  <a class="brand" href="#">
+    <span class="brand-mark">E</span>
+    <span>ExamSaathi AI</span>
+  </a>
+  <nav class="nav-links" aria-label="Main navigation">
+    <a href="#tutor">AI Tutor</a>
+    <a href="#notes">Study from PDF</a>
+    <a href="#about">About</a>
+  </nav>
+  <div class="nav-right">
+    <div class="status"><span class="dot"></span> AI Engine Ready</div>
+    <a class="nav-cta" href="#tutor">Start learning ↗</a>
+  </div>
+</header>
+
+<main>
+  <section class="hero" id="about">
+    <div class="hero-copy">
+      <div class="eyebrow"><span></span> Your personal AI learning companion</div>
+      <h1>Big ideas.<br><em>Made simple.</em></h1>
+      <p>Meet ExamSaathi AI. Ask questions in your preferred language, learn through voice, and explore your own study notes with AI-powered answers.</p>
+      <div class="hero-actions">
+        <a class="primary-link" href="#tutor">Meet your AI tutor <span>↗</span></a>
+        <a class="secondary-link" href="#notes">Explore PDF learning ↓</a>
+      </div>
+    </div>
+    <div class="hero-art" aria-hidden="true">
+      <div class="orbit">
+        <div class="orb-core"><span>E</span></div>
+        <div class="float-chip chip-one">✦ Local AI</div>
+        <div class="float-chip chip-two">◉ Voice enabled</div>
+        <div class="float-chip chip-three">⌁ Learn in your language</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="capabilities" aria-label="Features">
+    <article class="capability">
+      <div class="cap-icon">✦</div>
+      <div><h3>Understand anything</h3><p>Break down difficult topics into clear, student-friendly explanations.</p></div>
+    </article>
+    <article class="capability">
+      <div class="cap-icon">🎙</div>
+      <div><h3>Speak naturally</h3><p>Ask questions with your microphone and listen to spoken answers.</p></div>
+    </article>
+    <article class="capability">
+      <div class="cap-icon">▤</div>
+      <div><h3>Learn from your notes</h3><p>Upload a PDF and ask questions based on the material you study.</p></div>
+    </article>
+  </section>
+
+  <section class="section-intro">
+    <div><div class="kicker">Your learning workspace</div><h2>One place to get unstuck.</h2></div>
+    <p>Choose a way to learn. Chat with your tutor or bring your own notes into the conversation.</p>
+  </section>
+
+  <section class="workspace">
+    <section class="panel" id="tutor">
+      <div class="panel-head">
+        <div class="panel-title">
+          <div class="panel-symbol">✦</div>
+          <div><h3>Ask ExamSaathi</h3><small>Your AI tutor is ready when you are.</small></div>
+        </div>
+        <select class="language" id="languageSelect" aria-label="Answer language">
+          <option value="en-IN">English</option>
+          <option value="hi-IN">Hindi</option>
+        </select>
+      </div>
+      <div class="chat-body">
+        <div class="welcome"><strong>Welcome to your study space.</strong><br>Ask a question, choose a suggested topic, or use your microphone. I'll explain it step by step with practical examples.</div>
+        <div class="suggestions">
+          <button class="suggestion" data-question="Explain Artificial Intelligence in simple language.">What is AI?</button>
+          <button class="suggestion" data-question="Explain machine learning with a real-life example.">Machine Learning</button>
+          <button class="suggestion" data-question="Explain Python programming for beginners.">Learn Python</button>
+        </div>
+        <div class="input-area">
+          <textarea id="question" placeholder="What would you like to understand today?" aria-label="Your study question"></textarea>
+          <div class="controls">
+            <div class="control-left">
+              <button class="btn mic-btn" id="micButton" type="button">🎙 Ask using microphone</button>
+              <span class="hint" id="micStatus">Voice input ready</span>
+            </div>
+            <div class="control-right">
+              <button class="btn ask-btn" id="askButton" type="button">Ask ExamSaathi&nbsp; →</button>
+            </div>
+          </div>
+        </div>
+        <div class="loading" id="loading">✦ ExamSaathi is thinking...</div>
+        <div class="message" id="errorMessage" role="alert"></div>
+        <div class="response" id="response">
+          <h3>EXAMSAATHI'S ANSWER</h3>
+          <div class="answer" id="answer"></div>
+        </div>
+      </div>
+    </section>
+
+    <aside class="panel notes-panel" id="notes">
+      <div class="panel-head">
+        <div class="panel-title">
+          <div class="panel-symbol">▤</div>
+          <div><h3>Study from your PDF</h3><small>Your notes, ready to answer.</small></div>
+        </div>
+      </div>
+      <div class="notes-intro"><p>Upload your class notes or textbook PDF. ExamSaathi will process the document so you can ask questions from its content.</p></div>
+      <div class="notes-upload">
+        <div class="upload-icon">↑</div>
+        <div class="upload-label">Add your study material</div>
+        <div class="upload-help">Choose a text-based PDF from your device to get started.</div>
+        <input class="notes-file" type="file" id="pdfFile" accept=".pdf,application/pdf" aria-label="Choose PDF notes">
+        <button class="btn notes-upload-btn" id="uploadPdfButton" type="button">Upload and process PDF&nbsp; ↑</button>
+      </div>
+      <div class="notes-status" id="pdfStatus" role="status" aria-live="polite"></div>
+      <div class="notes-error" id="ragError" role="alert"></div>
+      <div class="notes-question">
+        <label for="ragQuestion">Ask something from your notes</label>
+        <textarea id="ragQuestion" placeholder="e.g. Explain the most important concept in this PDF."></textarea>
+        <div class="notes-ask-row"><button class="btn ask-btn" id="askRagButton" type="button">Ask from notes&nbsp; →</button></div>
+      </div>
+      <div class="notes-answer" id="ragAnswerBox">
+        <h3>ANSWER FROM YOUR NOTES</h3>
+        <div class="notes-answer-text" id="ragAnswerText"></div>
+        <div class="notes-sources" id="ragSources"></div>
+      </div>
+    </aside>
+  </section>
+</main>
+<footer class="footer">EXAMSAATHI AI · POWERED BY LOCAL AI + GNANI VOICE TECHNOLOGY</footer>
+<script>
+
+
+const questionInput = document.getElementById("question");
+const askButton = document.getElementById("askButton");
+const micButton = document.getElementById("micButton");
+const languageSelect = document.getElementById("languageSelect");
+const loading = document.getElementById("loading");
+const errorMessage = document.getElementById("errorMessage");
+const responseBox = document.getElementById("response");
+const answerBox = document.getElementById("answer");
+const micStatus = document.getElementById("micStatus");
+
+const pdfFileInput = document.getElementById("pdfFile");
+const uploadPdfButton = document.getElementById("uploadPdfButton");
+const pdfStatus = document.getElementById("pdfStatus");
+const ragQuestionInput = document.getElementById("ragQuestion");
+const askRagButton = document.getElementById("askRagButton");
+const ragError = document.getElementById("ragError");
+const ragAnswerBox = document.getElementById("ragAnswerBox");
+const ragAnswerText = document.getElementById("ragAnswerText");
+const ragSources = document.getElementById("ragSources");
+
+
+let stream = null;
+let audioContext = null;
+let processor = null;
+let audioChunks = [];
+let recording = false;
+let source = null;
+let silentGain = null;
+
+function showError(message) {
+    errorMessage.textContent = message;
+    errorMessage.style.display = "block";
+}
+
+function clearError() {
+    errorMessage.textContent = "";
+    errorMessage.style.display = "none";
+}
+
+function setLoading(active, message = "✦ ExamSaathi is thinking...") {
+    loading.textContent = message;
+    loading.style.display = active ? "block" : "none";
+    askButton.disabled = active;
+    micButton.disabled = active;
+}
+
+
+async function displayAnswer(question, answer, audioUrl, autoplay = false) {
+    questionInput.value = question || "";
+    answerBox.textContent = answer || "";
+    responseBox.style.display = "block";
+
+    const oldPlayer = document.getElementById("voiceAnswerPlayer");
+    if (oldPlayer) oldPlayer.remove();
+
+    if (!audioUrl) {
+        showError("Text answer received, but no audio URL was returned.");
+        return;
+    }
+
+    const player = document.createElement("audio");
+    player.id = "voiceAnswerPlayer";
+    player.controls = true;
+    player.preload = "auto";
+    player.style.width = "100%";
+    player.style.marginTop = "18px";
+
+    const fullAudioUrl = new URL(audioUrl, window.location.origin);
+    fullAudioUrl.searchParams.set("t", Date.now());
+
+    player.src = fullAudioUrl.toString();
+
+    player.addEventListener("error", () => {
+        showError("Audio loading failed. Check the /audio endpoint.");
+    });
+
+    responseBox.appendChild(player);
+
+    try {
+        await player.play();
+    } catch (error) {
+        console.log("Autoplay blocked. Press Play to listen:", error);
+    }
+}
+
+function encodeWav(chunks, sampleRate) {
+    const length = chunks.reduce((sum, chunk) => sum + chunk.length, 0);
+    const samples = new Float32Array(length);
+
+    let offset = 0;
+
+    for (const chunk of chunks) {
+        samples.set(chunk, offset);
+        offset += chunk.length;
+    }
+
+    const buffer = new ArrayBuffer(44 + samples.length * 2);
+    const view = new DataView(buffer);
+
+    function writeString(position, text) {
+        for (let i = 0; i < text.length; i++) {
+            view.setUint8(position + i, text.charCodeAt(i));
+        }
+    }
+
+    writeString(0, "RIFF");
+    view.setUint32(4, 36 + samples.length * 2, true);
+    writeString(8, "WAVE");
+    writeString(12, "fmt ");
+    view.setUint32(16, 16, true);
+    view.setUint16(20, 1, true);
+    view.setUint16(22, 1, true);
+    view.setUint32(24, sampleRate, true);
+    view.setUint32(28, sampleRate * 2, true);
+    view.setUint16(32, 2, true);
+    view.setUint16(34, 16, true);
+    writeString(36, "data");
+    view.setUint32(40, samples.length * 2, true);
+
+    let position = 44;
+
+    for (let i = 0; i < samples.length; i++) {
+        const sample = Math.max(-1, Math.min(1, samples[i]));
+
+        view.setInt16(
+            position,
+            sample < 0 ? sample * 32768 : sample * 32767,
+            true
+        );
+
+        position += 2;
+    }
+
+    return new Blob([buffer], { type: "audio/wav" });
+}
+
+// TEXT QUESTION
+async function askExamSaathi() {
+    clearError();
+
+    const question = questionInput.value.trim();
+
+    if (!question) {
+        showError("Please enter a question first.");
+        questionInput.focus();
+        return;
+    }
+
+    setLoading(true);
+    responseBox.style.display = "none";
+
+    try {
+        const response = await fetch("/ask", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                question: question,
+                language_code: languageSelect.value
+            })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.detail || "Unable to get an answer.");
+        }
+
+        displayAnswer(
+            data.question || question,
+            data.answer,
+            data.audio_url
+        );
+
+    } catch (error) {
+        showError("Request failed: " + error.message);
+    } finally {
+        setLoading(false);
+    }
+}
+
+// PDF UPLOAD FOR RAG
+function showRagError(message) {
+    ragError.textContent = message;
+    ragError.style.display = "block";
+}
+
+function clearRagError() {
+    ragError.textContent = "";
+    ragError.style.display = "none";
+}
+
+async function uploadStudyPdf() {
+    clearRagError();
+    pdfStatus.style.display = "none";
+
+    const file = pdfFileInput.files[0];
+
+    if (!file) {
+        showRagError("Please choose a PDF file first.");
+        return;
+    }
+
+    if (!file.name.toLowerCase().endsWith(".pdf")) {
+        showRagError("Only PDF files are allowed.");
+        return;
+    }
+
+    const formData = new FormData();
+    // The FastAPI endpoint expects the upload field name "upload".
+    formData.append("upload", file);
+
+    uploadPdfButton.disabled = true;
+    uploadPdfButton.textContent = "Uploading...";
+    pdfStatus.textContent = "Uploading and processing your PDF...";
+    pdfStatus.style.display = "block";
+
+    try {
+        const response = await fetch("/upload-pdf", {
+            method: "POST",
+            body: formData
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.detail || "PDF upload failed.");
+        }
+
+        pdfStatus.textContent =
+            (data.message || "PDF processed successfully.") +
+            " Chunks added: " + data.chunks_added +
+            ". You can now ask questions from your notes.";
+    } catch (error) {
+        showRagError("PDF upload failed: " + error.message);
+        pdfStatus.style.display = "none";
+    } finally {
+        uploadPdfButton.disabled = false;
+        uploadPdfButton.textContent = "Upload PDF";
+    }
+}
+
+// ASK A QUESTION USING RETRIEVED PDF NOTES
+async function askFromStudyNotes() {
+    clearRagError();
+
+    const question = ragQuestionInput.value.trim();
+
+    if (!question) {
+        showRagError("Please enter a question about your uploaded notes.");
+        ragQuestionInput.focus();
+        return;
+    }
+
+    askRagButton.disabled = true;
+    askRagButton.textContent = "Searching notes...";
+    ragAnswerBox.style.display = "none";
+
+    try {
+        const response = await fetch("/ask-rag", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                question: question,
+                language_code: languageSelect.value
+            })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.detail || "Unable to answer from your notes.");
+        }
+
+        ragAnswerText.textContent = data.answer || "No answer was returned.";
+        ragSources.replaceChildren();
+
+        const sourceHeading = document.createElement("strong");
+        sourceHeading.textContent = "Sources";
+        ragSources.appendChild(sourceHeading);
+
+        if (Array.isArray(data.sources) && data.sources.length > 0) {
+            data.sources.forEach((source, index) => {
+                const item = document.createElement("div");
+                item.className = "notes-source-item";
+
+                const pageText = source.page !== undefined
+                    ? source.page
+                    : "Unknown";
+
+                item.textContent =
+                    (index + 1) + ". " +
+                    (source.document || "Uploaded document") +
+                    " · Page: " + pageText +
+                    " · Chunk: " + source.chunk +
+                    " · Distance: " + source.distance;
+
+                ragSources.appendChild(item);
+            });
+        } else {
+            const noSources = document.createElement("div");
+            noSources.textContent = "No matching source chunks were returned.";
+            ragSources.appendChild(noSources);
+        }
+
+        ragAnswerBox.style.display = "block";
+    } catch (error) {
+        showRagError("RAG request failed: " + error.message);
+    } finally {
+        askRagButton.disabled = false;
+        askRagButton.textContent = "Ask from Notes →";
+    }
+}
+
+// START MICROPHONE
+async function startRecording() {
+    clearError();
+
+    try {
+        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+            throw new Error("Microphone access requires localhost or HTTPS.");
+        }
+
+        stream = await navigator.mediaDevices.getUserMedia({
+            audio: {
+                channelCount: 1,
+                echoCancellation: true,
+                noiseSuppression: true
+            }
+        });
+
+        audioContext = new AudioContext();
+
+        if (audioContext.state === "suspended") {
+            await audioContext.resume();
+        }
+
+        source = audioContext.createMediaStreamSource(stream);
+        processor = audioContext.createScriptProcessor(4096, 1, 1);
+        audioChunks = [];
+
+        processor.onaudioprocess = function(event) {
+            if (recording) {
+                audioChunks.push(
+                    new Float32Array(event.inputBuffer.getChannelData(0))
+                );
+            }
+        };
+
+        silentGain = audioContext.createGain();
+        silentGain.gain.value = 0;
+
+        source.connect(processor);
+        processor.connect(silentGain);
+        silentGain.connect(audioContext.destination);
+
+        recording = true;
+
+        micButton.classList.add("recording");
+        micButton.textContent = "⏹ Stop and send voice";
+        micStatus.textContent = "Listening... Speak now";
+
+    } catch (error) {
+        cleanupRecording();
+        showError("Microphone access failed: " + error.message);
+        micStatus.textContent = "Microphone unavailable";
+    }
+}
+
+// CLEANUP MICROPHONE
+async function cleanupRecording() {
+    recording = false;
+
+    try {
+        if (processor) processor.disconnect();
+        if (source) source.disconnect();
+        if (silentGain) silentGain.disconnect();
+
+        if (stream) {
+            stream.getTracks().forEach(track => track.stop());
+        }
+
+        if (audioContext && audioContext.state !== "closed") {
+            await audioContext.close();
+        }
+    } catch (error) {
+        console.log("Microphone cleanup:", error);
+    }
+
+    stream = null;
+    audioContext = null;
+    processor = null;
+    source = null;
+    silentGain = null;
+}
+
+// STOP MICROPHONE AND SEND AUDIO
+async function stopRecording() {
+    if (!recording) return;
+
+    recording = false;
+
+    micButton.disabled = true;
+    askButton.disabled = true;
+    micButton.textContent = "Processing voice...";
+    micStatus.textContent = "Sending audio to Gnani...";
+
+    try {
+        const sampleRate = audioContext.sampleRate;
+        const wavBlob = encodeWav(audioChunks, sampleRate);
+
+        await cleanupRecording();
+
+        if (wavBlob.size <= 44) {
+            throw new Error("No audio was recorded. Please try again.");
+        }
+
+        const formData = new FormData();
+
+        formData.append("audio", wavBlob, "question.wav");
+
+        // This is the selected RESPONSE language.
+        formData.append("language_code", languageSelect.value);
+
+        setLoading(true, "✦ Processing your voice question...");
+        responseBox.style.display = "none";
+
+        const response = await fetch("/ask-voice", {
+            method: "POST",
+            body: formData
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.detail || "Voice request failed.");
+        }
+
+        displayAnswer(
+            data.question,
+            data.answer,
+            data.audio_url,
+            true
+        );
+
+        micStatus.textContent = "Voice processed successfully";
+
+    } catch (error) {
+        showError("Voice processing failed: " + error.message);
+        micStatus.textContent = "Voice processing failed";
+
+    } finally {
+        await cleanupRecording();
+
+        loading.style.display = "none";
+        askButton.disabled = false;
+        micButton.disabled = false;
+        micButton.classList.remove("recording");
+        micButton.textContent = "🎙️ Ask using microphone";
+    }
+}
+
+// MICROPHONE BUTTON
+async function toggleMicrophone() {
+    if (recording) {
+        await stopRecording();
+    } else {
+        await startRecording();
+    }
+}
+
+// BUTTON EVENTS
+micButton.addEventListener("click", toggleMicrophone);
+askButton.addEventListener("click", askExamSaathi);
+
+uploadPdfButton.addEventListener("click", uploadStudyPdf);
+askRagButton.addEventListener("click", askFromStudyNotes);
+
+ragQuestionInput.addEventListener("keydown", function(event) {
+    if (event.key === "Enter" && !event.shiftKey) {
+        event.preventDefault();
+        askFromStudyNotes();
+    }
+});
+
+
+// ENTER TO SEND TEXT QUESTION
+questionInput.addEventListener("keydown", function(event) {
+    if (event.key === "Enter" && !event.shiftKey) {
+        event.preventDefault();
+        askExamSaathi();
+    }
+});
+
+// SUGGESTION BUTTONS
+document.querySelectorAll(".suggestion").forEach(button => {
+    button.addEventListener("click", function() {
+        questionInput.value = button.dataset.question;
+        questionInput.focus();
+    });
+});
+
+</script>
+</body>
+</html>
